@@ -23,9 +23,10 @@ public class UserRepository {
 
     public void createUser(UserEntity entity){
         log.info("UserRepository.createUser()");
-        String query = "INSERT into user(userName, password) VALUES(:email, :password)";
+        String query = "INSERT into user(email, userName, password) VALUES(:email, :userName, :password)";
         Map<String, Object> params = new HashMap<>();
-        params.put("email", entity.getUserName());
+        params.put("email", entity.getEmail());
+        params.put("userName", entity.getUserName());
         params.put("password", entity.getPassword());
 
         template.update(query, params);
@@ -33,8 +34,9 @@ public class UserRepository {
 
     public UserEntity userLogin(UserEntity entity){
         log.info("UserRepository.userLogin()");
-        String query = "select userId, userName from user WHERE userName = :userName and password = :password";
+        String query = "SELECT userId, userName FROM user WHERE email = :email OR userName = :userName AND password = :password";
         Map<String, Object> params = new HashMap<>();
+        params.put("email", entity.getEmail());
         params.put("userName", entity.getUserName());
         params.put("password", entity.getPassword());
         RowMapper<UserEntity> rowMapper = new BeanPropertyRowMapper<>(UserEntity.class);

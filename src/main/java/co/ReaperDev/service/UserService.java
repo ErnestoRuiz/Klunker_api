@@ -23,14 +23,14 @@ public class UserService {
 
     public void createUser(UserDTO userDTO){
         log.info("UserService.createUser(" + userDTO.toString() + ")");
-        UserEntity entity = new UserEntity(userDTO.getUserName(), userDTO.getPassword());
+        UserEntity entity = new UserEntity(userDTO.getEmail(), userDTO.getUserName(), userDTO.getPassword());
         repository.createUser(entity);
     }
     public UserDTO userLogin(UserDTO userDTO){
         log.info("UserService.userLogin()");
         log.info(userDTO.toString());
 //        UserEntity entity = mapper.map(userDTO, UserEntity.class);
-        UserEntity entity =  new UserEntity(userDTO.getId(), userDTO.getUserName(), userDTO.getPassword());
+        UserEntity entity =  new UserEntity(userDTO.getEmail(), userDTO.getUserName(), userDTO.getPassword());
         log.info(entity.toString());
         log.info("entity mapped");
 

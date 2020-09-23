@@ -11,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 @AllArgsConstructor
 public class UserEntity {
     private int userId;
+    private String email;
     private String userName;
     private String password;
 
@@ -22,5 +23,11 @@ public class UserEntity {
     public UserEntity(int i, String e){
         this.userId = i;
         this.userName = e;
+    }
+
+    public UserEntity(String e, String u, String p){
+        this.email = e;
+        this.userName = u;
+        this.password = p;
     }
 }
