@@ -24,6 +24,11 @@ public class AppConfiguration {
                 .byDefault()
                 .register();
 
+        mapperFactory.classMap(UserEntity.class, UserDTO.class)
+                .mapNulls(true)
+                .byDefault()
+                .register();
+
         return mapperFactory;
     }
 
