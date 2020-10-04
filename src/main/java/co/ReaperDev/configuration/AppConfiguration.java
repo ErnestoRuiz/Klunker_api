@@ -1,6 +1,8 @@
 package co.ReaperDev.configuration;
 
+import co.ReaperDev.dto.CarDTO;
 import co.ReaperDev.dto.UserDTO;
+import co.ReaperDev.repository.entity.CarEntity;
 import co.ReaperDev.repository.entity.UserEntity;
 import ma.glasnost.orika.DefaultFieldMapper;
 import ma.glasnost.orika.MapperFacade;
@@ -24,7 +26,7 @@ public class AppConfiguration {
                 .byDefault()
                 .register();
 
-        mapperFactory.classMap(UserEntity.class, UserDTO.class)
+        mapperFactory.classMap(CarDTO.class, CarEntity.class)
                 .mapNulls(true)
                 .byDefault()
                 .register();

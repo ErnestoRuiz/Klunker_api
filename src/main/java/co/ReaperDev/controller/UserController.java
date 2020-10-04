@@ -18,6 +18,7 @@ public class UserController {
     public UserController(UserService c){
         this.service = c;
     }
+
     @PostMapping(value = "/createUser", consumes = "application/json")
     public ResponseEntity createUser(@RequestBody UserDTO userDTO) {
         log.info("createUser CALLED");

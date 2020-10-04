@@ -54,6 +54,6 @@
   </dependencies>
 
   <build>
-    <finalName>klunker_api</finalName>
+    <finalName>LenoLog</finalName>
   </build>
 </project>

@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CarDTO {
-    private int id;
+    private int carId;
     private int userId;
     private String make;
     private String model;

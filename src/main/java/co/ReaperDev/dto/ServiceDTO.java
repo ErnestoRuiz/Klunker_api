@@ -10,7 +10,7 @@ import java.sql.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ServiceDTO {
-    private int id;
+    private int serviceId;
     private int carId;
     private String servDetail;
     private Date date;

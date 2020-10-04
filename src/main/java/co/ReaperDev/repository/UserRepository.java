@@ -1,6 +1,7 @@
 package co.ReaperDev.repository;
 
 import co.ReaperDev.repository.entity.UserEntity;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -12,14 +13,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
+@AllArgsConstructor
 @Repository
 public class UserRepository {
     private NamedParameterJdbcTemplate template;
-
-    @Autowired
-    public UserRepository(NamedParameterJdbcTemplate t){
-        this.template = t;
-    }
 
     public void createUser(UserEntity entity){
         log.info("UserRepository.createUser()");
@@ -43,4 +40,5 @@ public class UserRepository {
 
         return template.queryForObject(query, params, rowMapper);
     }
+
 }
