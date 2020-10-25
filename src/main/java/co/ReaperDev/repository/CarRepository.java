@@ -26,12 +26,13 @@ public class CarRepository {
     }
     public void createCar(CarEntity carEntity){
         log.info("CarRepository.createCar()");
-        String query = "INSERT INTO car(userId, make, model, year, mpg) values(:userId, :make, :model, :year, :mpg)";
+        String query = "INSERT INTO car(userId, make, model, year, color, mpg) values(:userId, :make, :model, :year, :color, :mpg)";
         Map<String, Object> params = new HashMap<>();
         params.put("userId", carEntity.getUserId());
         params.put("make", carEntity.getMake());
         params.put("model", carEntity.getModel());
         params.put("year", carEntity.getYear());
+        params.put("color", carEntity.getColor());
         params.put("mpg", carEntity.getMpg());
 
         template.update(query, params);

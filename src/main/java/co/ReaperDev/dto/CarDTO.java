@@ -13,5 +13,6 @@ public class CarDTO {
     private String make;
     private String model;
     private String year;
+    private String color;
     private int mpg;
 }
