@@ -15,5 +15,5 @@ public class ServiceDTO {
     private String servDetail;
     private Date date;
     private double cost;
-    private int servMileage;
+    private String servMileage;
 }
