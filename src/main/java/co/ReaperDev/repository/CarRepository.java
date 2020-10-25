@@ -1,6 +1,7 @@
 package co.ReaperDev.repository;
 
 import co.ReaperDev.repository.entity.CarEntity;
+import co.ReaperDev.repository.entity.CostEntity;
 import co.ReaperDev.repository.entity.UserEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -52,5 +54,27 @@ public class CarRepository {
         params.put("carId", carEntity.getCarId());
 
         template.update(query, params);
+    }
+
+    public List<CostEntity> getListOfTotalCost(int carId){
+        log.info("CarRepository.getTotalCosts()");
+        String query = "select cost from service where carId = :carId";
+        Map<String, Object> params = new HashMap<>();
+        params.put("carId", carId);
+        RowMapper<CostEntity> rowMapper = new BeanPropertyRowMapper<>(CostEntity.class);
+
+        return template.query(query, params, rowMapper);
+    }
+
+    public List<CostEntity> getListOfYearCost(int carId){
+        log.info("CarRepository.getMonthlyAverageOfYear()");
+        LocalDate localDate = LocalDate.now();
+        String query = "select cost from service where carId = :carId and date > date_add(:localDate, interval -1 year);";
+        Map<String, Object> params = new HashMap<>();
+        params.put("carId", carId);
+        params.put("localDate", localDate);
+        RowMapper<CostEntity> rowMapper = new BeanPropertyRowMapper<>(CostEntity.class);
+
+        return template.query(query, params, rowMapper);
     }
 }

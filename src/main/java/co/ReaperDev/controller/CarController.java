@@ -3,6 +3,7 @@ package co.ReaperDev.controller;
 import co.ReaperDev.dto.CarDTO;
 import co.ReaperDev.dto.UserDTO;
 import co.ReaperDev.service.CarService;
+import co.ReaperDev.service.ServiceService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +25,7 @@ public class CarController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PostMapping(value = "/getCarsByUser", consumes = "application/json", produces = "application/json")
+    @GetMapping(value = "/getCarsByUser", consumes = "application/json", produces = "application/json")
     public ResponseEntity getCarsByUserName(@RequestBody UserDTO userDTO){
         log.info("/getCarsByUser endpoint hit");
         service.getCarsByUser(userDTO);
@@ -36,6 +37,12 @@ public class CarController {
         log.info("/deleteCar endpoint hit");
         service.deleteCar(carDTO);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @GetMapping(value = "/getCostOfServices", consumes = "application/json")
+    public ResponseEntity getCostOfServices(@RequestBody CarDTO carDTO){
+        log.info("/getCostOfServices endpoint hit");
+        return ResponseEntity.ok(service.getCostOfServices(carDTO));
     }
 
 }

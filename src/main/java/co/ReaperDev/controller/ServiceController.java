@@ -24,13 +24,13 @@ public class ServiceController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PostMapping(value = "/getServicesByCar", consumes = "application/json")
+    @GetMapping(value = "/getServicesByCar", consumes = "application/json")
     public ResponseEntity getServicesByCar(@RequestBody CarDTO carDTO){
         log.info("getServicesByCarId endpoint hit");
         return ResponseEntity.ok(service.getServicesByCar(carDTO));
     }
 
-    @PostMapping(value = "/getServicesByUser", consumes = "application/json")
+    @GetMapping(value = "/getServicesByUser", consumes = "application/json")
     public ResponseEntity getServicesByUserId(@RequestBody UserDTO userDTO){
         log.info("getServicesByUserId endpoint hit");
         return ResponseEntity.ok(service.getServicesByUser(userDTO));
