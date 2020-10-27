@@ -32,4 +32,8 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(service.userLogin(userDTO));
     }
 
+    @GetMapping(value = "/getAllUsers")
+    public ResponseEntity getAllUsers(){
+        return ResponseEntity.status(HttpStatus.OK).body(service.getAllUsers());
+    }
 }

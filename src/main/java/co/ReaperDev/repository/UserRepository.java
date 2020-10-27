@@ -10,6 +10,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -41,4 +42,10 @@ public class UserRepository {
         return template.queryForObject(query, params, rowMapper);
     }
 
+    public List<UserEntity> getAllUsers(){
+        log.info("UserRepository.getAllUsers()");
+        String query = "select email, username from user";
+        RowMapper<UserEntity> rowMapper = new BeanPropertyRowMapper<>(UserEntity.class);
+        return template.query(query, rowMapper);
+    }
 }

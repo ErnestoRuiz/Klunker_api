@@ -1,5 +1,5 @@
-.idea
+.idea/
 *.iml
 pom.xml
-target/
+target
 *.yml

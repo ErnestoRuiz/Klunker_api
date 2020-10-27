@@ -56,26 +56,4 @@ public class CarRepository {
 
         template.update(query, params);
     }
-
-    public List<CostEntity> getListOfTotalCost(int carId){
-        log.info("CarRepository.getTotalCosts()");
-        String query = "select cost from service where carId = :carId";
-        Map<String, Object> params = new HashMap<>();
-        params.put("carId", carId);
-        RowMapper<CostEntity> rowMapper = new BeanPropertyRowMapper<>(CostEntity.class);
-
-        return template.query(query, params, rowMapper);
-    }
-
-    public List<CostEntity> getListOfYearCost(int carId){
-        log.info("CarRepository.getMonthlyAverageOfYear()");
-        LocalDate localDate = LocalDate.now();
-        String query = "select cost from service where carId = :carId and date > date_add(:localDate, interval -1 year);";
-        Map<String, Object> params = new HashMap<>();
-        params.put("carId", carId);
-        params.put("localDate", localDate);
-        RowMapper<CostEntity> rowMapper = new BeanPropertyRowMapper<>(CostEntity.class);
-
-        return template.query(query, params, rowMapper);
-    }
 }

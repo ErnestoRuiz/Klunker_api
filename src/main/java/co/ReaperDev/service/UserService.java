@@ -9,6 +9,9 @@ import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Slf4j
 @Service
 @AllArgsConstructor
@@ -34,6 +37,19 @@ public class UserService {
         log.info("entity mapped");
 
         UserDTO retval = new UserDTO(repository.userLogin(entity).getUserId(), repository.userLogin(entity).getUserName() );
+        return retval;
+
+    }
+    public List<UserDTO> getAllUsers(){
+        log.info("UserService.getAllUsers()");
+        List<UserEntity> entities = repository.getAllUsers();
+        List<UserDTO> retval = new ArrayList<>();
+        for(UserEntity e: entities){
+            UserDTO userDTO = new UserDTO();
+            userDTO.setUserName(e.getUserName());
+            userDTO.setEmail(e.getEmail());
+            retval.add(userDTO);
+        }
         return retval;
     }
 }
