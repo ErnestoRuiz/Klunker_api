@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,6 +31,7 @@ public class ServiceService {
     public void createService(ServiceDTO serviceDTO){
         log.info("ServiceService.createService()");
         ServiceEntity entity = mapper.map(serviceDTO, ServiceEntity.class);
+        entity.setDate(Date.valueOf(serviceDTO.getDate()));
         servRepo.createService(entity);
     }
 
@@ -40,6 +42,7 @@ public class ServiceService {
         List<ServiceDTO> retval = new ArrayList<>();
         for(ServiceEntity s: entities){
             ServiceDTO serviceDTO = mapper.map(s, ServiceDTO.class);
+            serviceDTO.setDate(s.getDate().toString());
             retval.add(serviceDTO);
         }
         return retval;
@@ -52,6 +55,7 @@ public class ServiceService {
         List<ServiceDTO> retval = new ArrayList<>();
         for(ServiceEntity s: entities){
             ServiceDTO serviceDTO = mapper.map(s, ServiceDTO.class);
+            serviceDTO.setDate(s.getDate().toString());
             retval.add(serviceDTO);
         }
         return retval;
