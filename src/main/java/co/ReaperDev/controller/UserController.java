@@ -26,13 +26,13 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping(value = "/userLogin", consumes = "application/json")
+    @PostMapping(value = "/userLogin", consumes = "application/json")
     public ResponseEntity userLogIn(@RequestBody UserDTO userDTO) {
         log.info("USER LOGGING IN");
         return ResponseEntity.status(HttpStatus.OK).body(service.userLogin(userDTO));
     }
 
-    @GetMapping(value = "/getAllUsers")
+    @PostMapping(value = "/getAllUsers")
     public ResponseEntity getAllUsers(){
         return ResponseEntity.status(HttpStatus.OK).body(service.getAllUsers());
     }

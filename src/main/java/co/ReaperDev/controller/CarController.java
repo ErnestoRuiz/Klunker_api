@@ -25,21 +25,21 @@ public class CarController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping(value = "/getCarsByUser", consumes = "application/json", produces = "application/json")
+    @PostMapping(value = "/getCarsByUser", consumes = "application/json", produces = "application/json")
     public ResponseEntity getCarsByUserName(@RequestBody UserDTO userDTO){
         log.info("/getCarsByUser endpoint hit");
         carService.getCarsByUser(userDTO);
         return ResponseEntity.ok(carService.getCarsByUser(userDTO));
     }
 
-    @DeleteMapping(value = "/deleteCar", consumes = "application/json")
+    @PostMapping(value = "/deleteCar", consumes = "application/json")
     public ResponseEntity deleteCar(@RequestBody CarDTO carDTO){
         log.info("/deleteCar endpoint hit");
         carService.deleteCar(carDTO);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @GetMapping(value = "/getCostOfServices", consumes = "application/json")
+    @PostMapping(value = "/getCostOfServices", consumes = "application/json")
     public ResponseEntity getCostOfServices(@RequestBody CarDTO carDTO){
         log.info("/getCostOfServices endpoint hit");
         return ResponseEntity.ok(serviceService.getCostOfServices(carDTO));
