@@ -1,7 +1,6 @@
 package co.ReaperDev.controller;
 
 import co.ReaperDev.dto.CarDTO;
-import co.ReaperDev.dto.UserDTO;
 import co.ReaperDev.service.CarService;
 import co.ReaperDev.service.ServiceService;
 import lombok.AllArgsConstructor;
@@ -25,24 +24,24 @@ public class CarController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PostMapping(value = "/getCarsByUser", consumes = "application/json", produces = "application/json")
-    public ResponseEntity getCarsByUserName(@RequestBody UserDTO userDTO){
+    @RequestMapping(value = "/getCarsByUser", method = RequestMethod.GET)
+    public ResponseEntity getCarsByUserId(@RequestParam ("userId") int id){
         log.info("/getCarsByUser endpoint hit");
-        carService.getCarsByUser(userDTO);
-        return ResponseEntity.ok(carService.getCarsByUser(userDTO));
+        carService.getCarsByUser(id);
+        return ResponseEntity.ok(carService.getCarsByUser(id));
     }
 
-    @PostMapping(value = "/deleteCar", consumes = "application/json")
-    public ResponseEntity deleteCar(@RequestBody CarDTO carDTO){
+    @RequestMapping(value = "/deleteCar", method = RequestMethod.DELETE)
+    public ResponseEntity deleteCar(@RequestParam ("carId") int carId){
         log.info("/deleteCar endpoint hit");
-        carService.deleteCar(carDTO);
+        carService.deleteCar(carId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 
-    @PostMapping(value = "/getCostOfServices", consumes = "application/json")
-    public ResponseEntity getCostOfServices(@RequestBody CarDTO carDTO){
+    @RequestMapping(value = "/getCostOfServices", method = RequestMethod.GET)
+    public ResponseEntity getCostOfServices(@RequestParam ("carId") int carId){
         log.info("/getCostOfServices endpoint hit");
-        return ResponseEntity.ok(serviceService.getCostOfServices(carDTO));
+        return ResponseEntity.ok(serviceService.getCostOfServices(carId));
     }
 
 }

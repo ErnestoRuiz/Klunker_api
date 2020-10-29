@@ -35,10 +35,9 @@ public class ServiceService {
         servRepo.createService(entity);
     }
 
-    public List<ServiceDTO> getServicesByCar(CarDTO carDTO){
+    public List<ServiceDTO> getServicesByCar(int carId){
         log.info("ServiceService.getServiceByCarId()");
-        CarEntity carEntity = mapper.map(carDTO, CarEntity.class);
-        List<ServiceEntity> entities = servRepo.getServicesByCar(carEntity);
+        List<ServiceEntity> entities = servRepo.getServicesByCar(carId);
         List<ServiceDTO> retval = new ArrayList<>();
         for(ServiceEntity s: entities){
             ServiceDTO serviceDTO = mapper.map(s, ServiceDTO.class);
@@ -61,10 +60,9 @@ public class ServiceService {
         return retval;
     }
 
-    public void deleteService(ServiceDTO serviceDTO){
+    public void deleteService(int serviceId){
         log.info("deleteService endpoint hit");
-        ServiceEntity entity = mapper.map(serviceDTO, ServiceEntity.class);
-        servRepo.deleteService(entity);
+        servRepo.deleteService(serviceId);
     }
 
     public static double totalCostForYear(List<CostEntity> list){
@@ -94,27 +92,26 @@ public class ServiceService {
         return rounded;
     }
 
-    public ServicesMetrics getCostOfServices(CarDTO carDTO){
+    public ServicesMetrics getCostOfServices(int carId){
         log.info("CarService.getCostOfServices()");
-        CarEntity carEntity = mapper.map(carDTO, CarEntity.class);
 
-        List<CostEntity> totalCostList = servRepo.getListOfTotalCost(carEntity.getCarId());
-        List<CostEntity> pastYearCostList = servRepo.getListOfPastYearCost(carEntity.getCarId());
+        List<CostEntity> totalCostList = servRepo.getListOfTotalCost(carId);
+        List<CostEntity> pastYearCostList = servRepo.getListOfPastYearCost(carId);
 
         ServicesMetrics servicesMetrics = new ServicesMetrics();
-        servicesMetrics.setCarId(carEntity.getCarId());
+        servicesMetrics.setCarId(carId);
         servicesMetrics.setTotalCostAllServices(totalCostForYear(totalCostList));
         servicesMetrics.setTotalCostPastTwelveMo(totalCostForYear(pastYearCostList));
         servicesMetrics.setPastTwelveMonthAverage(getMonthlyAverageForYear(totalCostForYear(pastYearCostList)));
 
-        List<CostEntity> currentYear = servRepo.currentYearCostList(carDTO.getCarId());
-        List<CostEntity> yearOne = servRepo.getListOfCostForYear(carEntity.getCarId(), 1);
+        List<CostEntity> currentYear = servRepo.currentYearCostList(carId);
+        List<CostEntity> yearOne = servRepo.getListOfCostForYear(carId, 1);
         log.info(yearOne.toString());
-        List<CostEntity> yearTwo = servRepo.getListOfCostForYear(carEntity.getCarId(), 2);
-        List<CostEntity> yearThree = servRepo.getListOfCostForYear(carEntity.getCarId(), 3);
-        List<CostEntity> yearFour = servRepo.getListOfCostForYear(carEntity.getCarId(), 4);
-        List<CostEntity> yearFive = servRepo.getListOfCostForYear(carEntity.getCarId(), 5);
-        List<CostEntity> fiveYearTotal = servRepo.fiveYearTotalCost(carEntity.getCarId());
+        List<CostEntity> yearTwo = servRepo.getListOfCostForYear(carId, 2);
+        List<CostEntity> yearThree = servRepo.getListOfCostForYear(carId, 3);
+        List<CostEntity> yearFour = servRepo.getListOfCostForYear(carId, 4);
+        List<CostEntity> yearFive = servRepo.getListOfCostForYear(carId, 5);
+        List<CostEntity> fiveYearTotal = servRepo.fiveYearTotalCost(carId);
 
         servicesMetrics.setTotalCostCurrentYear(totalCostForYear(currentYear));
         servicesMetrics.setTotalCostLastYear(totalCostForYear(yearOne));

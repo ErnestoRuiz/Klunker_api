@@ -38,21 +38,21 @@ public class CarRepository {
         template.update(query, params);
     }
 
-    public List<CarEntity> getCarsByUser(UserEntity userEntity){
+    public List<CarEntity> getCarsByUser(int userId){
         log.info("CarRepository.getCarsByUser()");
         String query = "select carId, userId, make, model, year, mpg from car where userId = :userId";
         Map<String, Object> params = new HashMap<>();
-        params.put("userId", userEntity.getUserId());
+        params.put("userId", userId);
         RowMapper <CarEntity> rowMapper = new BeanPropertyRowMapper<>(CarEntity.class);
 
         return template.query(query, params, rowMapper);
     }
 
-    public void deleteCar(CarEntity carEntity){
+    public void deleteCar(int carId){
         log.info("CarRepository.deleteCar()");
         String query = "delete from car where carId = :carId";
         Map<String, Object> params = new HashMap<>();
-        params.put("carId", carEntity.getCarId());
+        params.put("carId", carId);
 
         template.update(query, params);
     }

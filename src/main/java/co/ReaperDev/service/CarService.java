@@ -32,10 +32,9 @@ public class CarService {
         carRepo.createCar(carEntity);
     }
 
-    public List<CarDTO> getCarsByUser(UserDTO userDTO){
+    public List<CarDTO> getCarsByUser(int userId){
         log.info("CarService.getCarsByUser()");
-        UserEntity userEntity = mapper.map(userDTO, UserEntity.class);
-        List<CarEntity> entities = carRepo.getCarsByUser(userEntity);
+        List<CarEntity> entities = carRepo.getCarsByUser(userId);
         List<CarDTO> retval = new ArrayList<>();
         for (CarEntity c: entities){
             CarDTO carDTO = mapper.map(c, CarDTO.class);
@@ -44,9 +43,8 @@ public class CarService {
         return retval;
     }
 
-    public void deleteCar(CarDTO carDTO){
+    public void deleteCar(int carId){
         log.info("CarService.deleteCar()");
-        CarEntity carEntity = mapper.map(carDTO, CarEntity.class);
-        carRepo.deleteCar(carEntity);
+        carRepo.deleteCar(carId);
     }
 }

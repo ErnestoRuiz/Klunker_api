@@ -35,11 +35,11 @@ public class ServiceRepository {
         template.update(query, params);
     }
 
-    public List<ServiceEntity> getServicesByCar(CarEntity carEntity){
+    public List<ServiceEntity> getServicesByCar(int carId){
         log.info("ServiceRepository.getServicesByCar");
         String query = "select serviceId, carId, servDetail, date, cost, servMileage from service where carId = :carId";
         Map<String, Object> params = new HashMap<>();
-        params.put("carId", carEntity.getCarId());
+        params.put("carId", carId);
         RowMapper<ServiceEntity> rowMapper = new BeanPropertyRowMapper<>(ServiceEntity.class);
 
         return template.query(query, params, rowMapper);
@@ -59,11 +59,11 @@ public class ServiceRepository {
         return template.query(query, params, rowMapper);
     }
 
-    public void deleteService(ServiceEntity entity){
+    public void deleteService(int serviceId){
         log.info("ServiceRepository.deleteService()");
         String query = "delete from service where serviceId = :serviceId";
         Map<String, Object> params = new HashMap<>();
-        params.put("serviceId", entity.getServiceId());
+        params.put("serviceId", serviceId);
 
         template.update(query, params);
     }

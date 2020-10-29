@@ -1,6 +1,5 @@
 package co.ReaperDev.controller;
 
-import co.ReaperDev.dto.CarDTO;
 import co.ReaperDev.dto.ServiceDTO;
 import co.ReaperDev.dto.UserDTO;
 import co.ReaperDev.service.ServiceService;
@@ -24,10 +23,10 @@ public class ServiceController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PostMapping(value = "/getServicesByCar", consumes = "application/json")
-    public ResponseEntity getServicesByCar(@RequestBody CarDTO carDTO){
+    @RequestMapping(value = "/getServicesByCar", method = RequestMethod.GET)
+    public ResponseEntity getServicesByCar(@RequestParam ("carId") int carId){
         log.info("getServicesByCarId endpoint hit");
-        return ResponseEntity.ok(service.getServicesByCar(carDTO));
+        return ResponseEntity.ok(service.getServicesByCar(carId));
     }
 
     @PostMapping(value = "/getServicesByUser", consumes = "application/json")
@@ -36,10 +35,10 @@ public class ServiceController {
         return ResponseEntity.ok(service.getServicesByUser(userDTO));
     }
 
-    @PostMapping(value = "/deleteService", consumes = "application/json")
-    public ResponseEntity deleteService(@RequestBody ServiceDTO serviceDTO){
+    @RequestMapping(value = "/deleteService", method = RequestMethod.DELETE)
+    public ResponseEntity deleteService(@RequestParam ("serviceId") int serviceId){
         log.info("deleteService endpoint hit");
-        service.deleteService(serviceDTO);
+        service.deleteService(serviceId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
 }
