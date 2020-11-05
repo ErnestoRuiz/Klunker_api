@@ -65,7 +65,7 @@ public class ServiceService {
         servRepo.deleteService(serviceId);
     }
 
-    public static double totalCostForYear(List<CostEntity> list){
+    public double totalCostForYear(List<CostEntity> list){
         double retval = 0;
         for(CostEntity c: list){
             retval = retval + c.getCost();
@@ -75,14 +75,14 @@ public class ServiceService {
         return rounded;
     }
 
-    public static double getMonthlyAverageForYear(double d){
+    public double getMonthlyAverageForYear(double d){
         double retval = d/12;
         BigDecimal bigDecimal = new BigDecimal(retval).setScale(2, RoundingMode.HALF_UP);
         double rounded = bigDecimal.doubleValue();
         return rounded;
     }
 
-    public static double monthlyAverageCurrentYear(List<CostEntity> list){
+    public double monthlyAverageCurrentYear(List<CostEntity> list){
         double total = totalCostForYear(list);
         LocalDate localDate = LocalDate.now();
         double month = localDate.getMonthValue();
