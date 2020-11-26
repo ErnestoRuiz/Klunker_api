@@ -1,14 +1,21 @@
 package co.ReaperDev.service;
 
 import co.ReaperDev.dto.UserDTO;
+import co.ReaperDev.exception.UserNameOrEmailAlreadyRegistered;
+import co.ReaperDev.exception.UserNotFoundException;
 import co.ReaperDev.repository.UserRepository;
 import co.ReaperDev.repository.entity.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ma.glasnost.orika.MapperFacade;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpServerErrorException;
 
+import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
+import java.sql.SQLNonTransientConnectionException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,8 +34,14 @@ public class UserService {
     public void createUser(UserDTO userDTO){
         log.info("UserService.createUser(" + userDTO.toString() + ")");
         UserEntity entity = new UserEntity(userDTO.getEmail(), userDTO.getUserName(), userDTO.getPassword());
-        repository.createUser(entity);
+
+        try {
+            repository.createUser(entity);
+        }catch (Exception ex){
+            throw new UserNameOrEmailAlreadyRegistered();
+        }
     }
+
     public UserDTO userLogin(UserDTO userDTO){
         log.info("UserService.userLogin()");
         log.info(userDTO.toString());
@@ -36,8 +49,16 @@ public class UserService {
         log.info(entity.toString());
         log.info("entity mapped");
 
-        UserDTO retval = new UserDTO(repository.userLogin(entity).getUserId(), repository.userLogin(entity).getUserName() );
-        return retval;
+        UserEntity retval;
+
+        try{
+            retval = repository.userLogin(entity);
+        }catch (EmptyResultDataAccessException ex){
+            throw new UserNotFoundException(userDTO.getUserName());
+        }
+
+
+        return mapper.map(retval, UserDTO.class);
 
     }
     public List<UserDTO> getAllUsers(){
